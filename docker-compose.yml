@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  llama3-webui:
+    image: atinoda/text-generation-webui:default
+    deploy:
+      restart_policy:
+        condition: unless-stopped
+    ports:
+      - "7860:7860"
+    volumes:
+      - ./models:/root/models
+      - ./data:/root/data
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command: >
+      python server.py --model-dir /root/models
