@@ -5,7 +5,7 @@ info:
   description: Local API to access Orion project files for review and debugging.
 
 servers:
-  - url: http://127.0.0.1:7861
+  - url: https://example.com
 
 paths:
   /get-file/{filename}:
