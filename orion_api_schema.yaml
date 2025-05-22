@@ -1,11 +1,11 @@
 openapi: 3.1.0
 info:
   title: Orion File API
-  version: "1.0.0"
-  description: Remote access to Orion AI files via ngrok for live GPT interactions.
+  version: "1.1.0"
+  description: Local API to access and update Orion project memory and configuration.
 
 servers:
-  - url: https://dfa0-210-252-239-4.ngrok-free.app
+  - url: https://your-ngrok-url.ngrok-free.app
 
 paths:
   /get-file/{filename}:
@@ -18,7 +18,7 @@ paths:
           required: true
           schema:
             type: string
-          description: The relative path to the file (e.g., chat.py or user_data/characters/Orion/persona_header.txt)
+          description: The relative path to the file (e.g., memory_header.json or chat.py)
       responses:
         "200":
           description: File retrieved successfully
@@ -28,3 +28,51 @@ paths:
                 type: string
         "404":
           description: File not found
+
+  /write-memory-entry:
+    post:
+      operationId: writeMemory
+      summary: Append a new structured entry to memory_header.json and memory_archive.jsonl
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                quote:
+                  type: string
+                emotion:
+                  type: string
+                traits:
+                  type: array
+                  items:
+                    type: string
+                importance:
+                  type: string
+                event_type:
+                  type: string
+                source:
+                  type: string
+              required:
+                - quote
+                - emotion
+                - traits
+                - importance
+                - event_type
+                - source
+      responses:
+        "200":
+          description: Entry successfully written
+        "500":
+          description: Failed to write to file
+
+  /trigger-summary:
+    post:
+      operationId: triggerSummary
+      summary: Execute Orion's summarization script to log session memory
+      responses:
+        "200":
+          description: Summary script executed successfully
+        "500":
+          description: Failed to execute script
