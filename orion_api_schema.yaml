@@ -2,10 +2,10 @@ openapi: 3.1.0
 info:
   title: Orion File API
   version: "1.0.0"
-  description: Local API to access Orion project files for review and debugging.
+  description: Remote access to Orion AI files via ngrok for live GPT interactions.
 
 servers:
-  - url: https://example.com
+  - url: https://dfa0-210-252-239-4.ngrok-free.app
 
 paths:
   /get-file/{filename}:
