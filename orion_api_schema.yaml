@@ -1,0 +1,30 @@
+openapi: 3.1.0
+info:
+  title: Orion File API
+  version: "1.0.0"
+  description: Local API to access Orion project files for review and debugging.
+
+servers:
+  - url: http://127.0.0.1:7861
+
+paths:
+  /get-file/{filename}:
+    get:
+      operationId: getFile
+      summary: Retrieve a specific file from the Orion project folder.
+      parameters:
+        - name: filename
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The relative path to the file (e.g., chat.py or user_data/characters/Orion/persona_header.txt)
+      responses:
+        "200":
+          description: File retrieved successfully
+          content:
+            text/plain:
+              schema:
+                type: string
+        "404":
+          description: File not found
